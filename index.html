@@ -3,68 +3,1136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSoundB | Real Meme Board</title>
+    <title>HSoundB | Ultimate Soundboard Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --p: #7d5fff; --s: #3ae374; --bg: #050505; --card: #111; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; margin: 0; text-align: center; }
-        .hero { padding: 60px 20px; background: radial-gradient(circle at center, #1e1e2e 0%, #050505 100%); }
-        h1 { font-size: 4rem; margin: 0; letter-spacing: -2px; }
+        :root {
+            --primary: #7d5fff;
+            --primary-dark: #5a3fd6;
+            --secondary: #3ae374;
+            --accent: #ff4757;
+            --bg: #0a0a0f;
+            --bg-card: #12121f;
+            --bg-hover: #1c1c2e;
+            --text: #ffffff;
+            --text-secondary: #b0b0d0;
+            --border: #2a2a3a;
+            --success: #3ae374;
+            --shadow: rgba(125, 95, 255, 0.15);
+        }
         
-        /* Screenshot Mockup Section */
-        .mockup-container { margin: 40px auto; max-width: 800px; position: relative; border-radius: 15px; overflow: hidden; box-shadow: 0 0 50px rgba(125, 95, 255, 0.3); border: 2px solid #333; }
-        .mockup-container img { width: 100%; display: block; filter: brightness(0.9); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
         
-        .badge-box { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
-        .badge { background: rgba(255,255,255,0.05); padding: 10px 20px; border-radius: 8px; font-size: 0.8rem; border: 1px solid #222; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(125, 95, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(58, 227, 116, 0.05) 0%, transparent 20%);
+        }
         
-        .vs-card { background: #ff4757; padding: 15px; border-radius: 10px; display: inline-block; margin-bottom: 30px; font-weight: bold; }
-
-        .download-area { display: flex; justify-content: center; gap: 20px; padding: 40px; background: #0a0a0a; }
-        .btn { padding: 20px 40px; border-radius: 12px; text-decoration: none; color: white; transition: 0.2s; border: 1px solid rgba(255,255,255,0.1); }
-        .btn-apk { background: #2c3e50; }
-        .btn-pc { background: #7d5fff; box-shadow: 0 10px 20px rgba(125, 95, 255, 0.2); }
-        .btn:hover { transform: scale(1.05); border-color: white; }
-
-        .footer { padding: 40px; color: #444; font-size: 0.8rem; }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        .header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--text);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-card);
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+        }
+        
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            padding: 20px 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            min-width: 180px;
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        /* Dashboard Preview */
+        .dashboard-section {
+            padding: 40px 0 80px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+        }
+        
+        .dashboard-container {
+            background: var(--bg-card);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+        }
+        
+        .dashboard-header {
+            padding: 24px 30px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(18, 18, 31, 0.8);
+        }
+        
+        .dashboard-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dashboard-controls {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .control-btn {
+            background: rgba(125, 95, 255, 0.1);
+            border: 1px solid rgba(125, 95, 255, 0.3);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .control-btn:hover {
+            background: rgba(125, 95, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Soundboard Grid */
+        .soundboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        
+        .sound-card {
+            background: var(--bg-hover);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sound-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px var(--shadow);
+        }
+        
+        .sound-card.active {
+            border-color: var(--secondary);
+            background: rgba(58, 227, 116, 0.05);
+        }
+        
+        .sound-card.playing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(125, 95, 255, 0.1), rgba(58, 227, 116, 0.05));
+            z-index: 0;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.5; }
+        }
+        
+        .sound-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .sound-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .sound-category {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .sound-controls {
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .play-btn, .fav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .play-btn {
+            background: var(--primary);
+            color: white;
+            flex-grow: 1;
+        }
+        
+        .play-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        
+        .fav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        
+        .fav-btn:hover, .fav-btn.active {
+            background: rgba(255, 71, 87, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* Player Bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+            box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .player-bar.active {
+            transform: translateY(0);
+        }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .player-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .player-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .player-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .player-category {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .player-btn {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .player-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+        }
+        
+        .play-pause-btn {
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            font-size: 1.8rem;
+        }
+        
+        .play-pause-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        
+        .player-volume {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            justify-content: flex-end;
+        }
+        
+        .volume-slider {
+            width: 120px;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            appearance: none;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+        
+        /* Download Section */
+        .download-section {
+            padding: 80px 0;
+            text-align: center;
+            background: rgba(10, 10, 15, 0.7);
+            border-radius: 30px;
+            margin: 40px 0;
+            border: 1px solid var(--border);
+        }
+        
+        .download-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        
+        .download-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 50px;
+        }
+        
+        .download-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .download-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px 30px;
+            min-width: 300px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px var(--shadow);
+        }
+        
+        .download-card.highlight {
+            border-color: var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-card.highlight::before {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--secondary);
+            color: var(--bg);
+            padding: 5px 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+        }
+        
+        .platform-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .platform-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .platform-specs {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+        
+        .download-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-brand {
+            max-width: 300px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        .footer-logo span {
+            color: var(--primary);
+        }
+        
+        .footer-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .footer-column a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .soundboard-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .soundboard-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                padding: 20px;
+            }
+            
+            .player-bar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .player-info, .player-controls, .player-volume {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .download-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .soundboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-wave-square"></i>
+                    </div>
+                    HSoundB<span>.</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link active">Dashboard</a>
+                    <a href="#" class="nav-link">Library</a>
+                    <a href="#" class="nav-link">Categories</a>
+                    <a href="#" class="nav-link">Favorites</a>
+                    <a href="#" class="nav-link">Settings</a>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">GS</div>
+                    <div>Greast Studio</div>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-<section class="hero">
-    <h1>HSoundB<span style="color:var(--p)">.</span></h1>
-    <p>Ultimate Soundboard for Legends. No Bloat. No Scam.</p>
-    
-    <div class="badge-box">
-        <div class="badge">🛡️ GOOGLE PROTECT OK</div>
-        <div class="badge">📶 100% OFFLINE</div>
-        <div class="badge">⚡ ZERO LATENCY</div>
-    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Ultimate Soundboard<br>Dashboard Experience</h1>
+            <p>HSoundB delivers professional-grade soundboard functionality with zero latency, no bloat, and a modern dashboard interface designed for power users.</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value">92MB</div>
+                    <div class="stat-label">Lightweight Package</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">0ms</div>
+                    <div class="stat-label">Instant Playback</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">500+</div>
+                    <div class="stat-label">Premium Sounds</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Offline Functionality</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="mockup-container">
-        <img src="preview.png" alt="HSoundB UI Preview">
-        <div style="position:absolute; bottom:20px; left:20px; background:rgba(0,0,0,0.7); padding:10px; border-radius:5px; font-size:0.7rem;">
-            UI REAL: Dashboard-style, bukan "Tempat Lagu"!
+    <!-- Dashboard Preview -->
+    <section class="dashboard-section">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Interactive Dashboard</h2>
+                    <p class="section-subtitle">Professional soundboard interface with real-time controls</p>
+                </div>
+                <div>
+                    <div class="control-btn"><i class="fas fa-sliders-h"></i> Customize Layout</div>
+                </div>
+            </div>
+            
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <i class="fas fa-th-large"></i> Soundboard Dashboard
+                    </div>
+                    <div class="dashboard-controls">
+                        <div class="control-btn"><i class="fas fa-search"></i> Search</div>
+                        <div class="control-btn"><i class="fas fa-filter"></i> Filter</div>
+                        <div class="control-btn"><i class="fas fa-sort-amount-down"></i> Sort</div>
+                    </div>
+                </div>
+                
+                <div class="soundboard-grid" id="soundboard">
+                    <!-- Sound cards will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Player Bar -->
+    <div class="player-bar" id="playerBar">
+        <div class="player-info">
+            <div class="player-icon">
+                <i class="fas fa-music"></i>
+            </div>
+            <div class="player-text">
+                <div class="player-title" id="playingTitle">No sound playing</div>
+                <div class="player-category" id="playingCategory">Select a sound to play</div>
+            </div>
+        </div>
+        
+        <div class="player-controls">
+            <button class="player-btn" id="prevBtn">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="player-btn play-pause-btn" id="playPauseBtn">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="player-btn" id="nextBtn">
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </div>
+        
+        <div class="player-volume">
+            <i class="fas fa-volume-up"></i>
+            <input type="range" min="0" max="100" value="80" class="volume-slider" id="volumeSlider">
         </div>
     </div>
 
-    <div class="vs-card">
-        HSoundB (92MB) vs OLD APPS (1.7GB) <br>
-        <span style="font-size:0.8rem; font-weight:normal;">Don't let trash take your storage.</span>
-    </div>
-</section>
+    <!-- Download Section -->
+    <section class="download-section">
+        <div class="container">
+            <h2 class="download-title">Download HSoundB Now</h2>
+            <p class="download-subtitle">Experience the ultimate soundboard dashboard. No bloat, no scam, just pure performance.</p>
+            
+            <div class="download-cards">
+                <div class="download-card highlight">
+                    <div class="platform-icon">
+                        <i class="fab fa-windows"></i>
+                    </div>
+                    <h3 class="platform-title">Windows Desktop</h3>
+                    <p class="platform-specs">v2.1 • 92MB • Full Dashboard Experience</p>
+                    <p>Advanced soundboard with customizable dashboard, hotkeys, and mixer controls.</p>
+                    <button class="download-btn">Download for Windows</button>
+                </div>
+                
+                <div class="download-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-android"></i>
+                    </div>
+                    <h3 class="platform-title">Android Mobile</h3>
+                    <p class="platform-specs">v2.1 • 80MB • Optimized for Touch</p>
+                    <p>Portable soundboard with gesture controls, widget support, and offline access.</p>
+                    <button class="download-btn">Download APK</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="download-area">
-    <a href="HSoundB_Android.apk" class="btn btn-apk">
-        <b>DOWNLOAD APK</b><br><span>v1.0 - 80MB</span>
-    </a>
-    <a href="HSoundB_Windows.zip" class="btn btn-pc">
-        <b>DOWNLOAD PC</b><br><span>v1.0 - 92MB</span>
-    </a>
-</div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">HSoundB<span>.</span></div>
+                    <p class="footer-description">HSoundB is the ultimate soundboard dashboard designed for professionals and enthusiasts. Experience zero-latency playback with a modern, intuitive interface.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Product</h3>
+                        <a href="#">Features</a>
+                        <a href="#">Downloads</a>
+                        <a href="#">Changelog</a>
+                        <a href="#">Pricing</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <a href="#">Documentation</a>
+                        <a href="#">Tutorials</a>
+                        <a href="#">Sound Packs</a>
+                        <a href="#">API</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <a href="#">About</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 Greast Studio. All rights reserved. HSoundB is a trademark of Greast Studio.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem; color: #666;">Google Protect Verified • 100% Offline • No Telemetry</p>
+            </div>
+        </div>
+    </footer>
 
-<div class="footer">
-    Developed by Greast Studio
-</div>
+    <script>
+        // Sound data
+        const sounds = [
+            { id: 1, name: "Bruh Sound", category: "Meme", icon: "fas fa-surprise", color: "#ff4757" },
+            { id: 2, name: "Air Horn", category: "Effects", icon: "fas fa-bullhorn", color: "#7d5fff" },
+            { id: 3, name: "Drum Roll", category: "Drums", icon: "fas fa-drum", color: "#3ae374" },
+            { id: 4, name: "Record Scratch", category: "Effects", icon: "fas fa-compact-disc", color: "#ffa502" },
+            { id: 5, name: "Victory Fanfare", category: "Gaming", icon: "fas fa-trophy", color: "#18dcff" },
+            { id: 6, name: "Wilhelm Scream", category: "Cinematic", icon: "fas fa-film", color: "#ff3838" },
+            { id: 7, name: "Bass Drop", category: "Music", icon: "fas fa-sliders-h", color: "#32ff7e" },
+            { id: 8, name: "Crowd Laugh", category: "Audience", icon: "fas fa-users", color: "#ff9f1a" },
+            { id: 9, name: "Suspense Tone", category: "Cinematic", icon: "fas fa-exclamation-triangle", color: "#7158e2" },
+            { id: 10, name: "Game Start", category: "Gaming", icon: "fas fa-gamepad", color: "#3ae374" },
+            { id: 11, name: "Camera Shutter", category: "Effects", icon: "fas fa-camera", color: "#17c0eb" },
+            { id: 12, name: "Error Sound", category: "UI Sounds", icon: "fas fa-times-circle", color: "#ff4757" }
+        ];
 
+        // Current playing state
+        let currentPlayingId = null;
+        let isPlaying = false;
+        let favorites = [1, 3, 7];
+
+        // Initialize soundboard
+        function initSoundboard() {
+            const soundboard = document.getElementById('soundboard');
+            soundboard.innerHTML = '';
+            
+            sounds.forEach(sound => {
+                const isFavorite = favorites.includes(sound.id);
+                
+                const soundCard = document.createElement('div');
+                soundCard.className = `sound-card ${currentPlayingId === sound.id ? 'playing' : ''}`;
+                soundCard.dataset.id = sound.id;
+                
+                soundCard.innerHTML = `
+                    <div class="sound-icon" style="background: linear-gradient(135deg, ${sound.color}, ${adjustColor(sound.color, -40)})">
+                        <i class="${sound.icon}"></i>
+                    </div>
+                    <div class="sound-title">${sound.name}</div>
+                    <div class="sound-category">${sound.category}</div>
+                    <div class="sound-controls">
+                        <div class="play-btn" data-id="${sound.id}">
+                            <i class="fas fa-play"></i> Play
+                        </div>
+                        <div class="fav-btn ${isFavorite ? 'active' : ''}" data-id="${sound.id}">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                `;
+                
+                soundboard.appendChild(soundCard);
+            });
+            
+            // Add event listeners
+            document.querySelectorAll('.play-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const soundId = parseInt(this.dataset.id);
+                    playSound(soundId);
+                });
+            });
+            
+            document.querySelectorAll('.fav-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const soundId = parseInt(this.dataset.id);
+                    toggleFavorite(soundId);
+                });
+            });
+            
+            document.querySelectorAll('.sound-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const soundId = parseInt(this.dataset.id);
+                    playSound(soundId);
+                });
+            });
+        }
+        
+        // Helper function to adjust color brightness
+        function adjustColor(color, amount) {
+            let usePound = false;
+            
+            if (color[0] === "#") {
+                color = color.slice(1);
+                usePound = true;
+            }
+            
+            const num = parseInt(color, 16);
+            let r = (num >> 16) + amount;
+            let g = ((num >> 8) & 0x00FF) + amount;
+            let b = (num & 0x0000FF) + amount;
+            
+            r = Math.min(Math.max(0, r), 255);
+            g = Math.min(Math.max(0, g), 255);
+            b = Math.min(Math.max(0, b), 255);
+            
+            return (usePound ? "#" : "") + (b | (g << 8) | (r << 16)).toString(16).padStart(6, "0");
+        }
+        
+        // Play sound function
+        function playSound(soundId) {
+            const sound = sounds.find(s => s.id === soundId);
+            if (!sound) return;
+            
+            // Stop currently playing sound
+            if (currentPlayingId) {
+                const prevCard = document.querySelector(`.sound-card[data-id="${currentPlayingId}"]`);
+                if (prevCard) prevCard.classList.remove('playing');
+            }
+            
+            // If clicking the same sound, toggle play/pause
+            if (currentPlayingId === soundId) {
+                isPlaying = !isPlaying;
+            } else {
+                currentPlayingId = soundId;
+                isPlaying = true;
+            }
+            
+            // Update UI
+            const currentCard = document.querySelector(`.sound-card[data-id="${soundId}"]`);
+            if (currentCard) {
+                if (isPlaying) {
+                    currentCard.classList.add('playing');
+                } else {
+                    currentCard.classList.remove('playing');
+                }
+            }
+            
+            // Update player bar
+            updatePlayerBar(sound);
+            
+            // Update play/pause button
+            const playIcon = document.querySelector(`.sound-card[data-id="${soundId}"] .play-btn i`);
+            if (playIcon) {
+                playIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+            }
+            
+            // Show player bar
+            document.getElementById('playerBar').classList.add('active');
+        }
+        
+        // Update player bar
+        function updatePlayerBar(sound) {
+            document.getElementById('playingTitle').textContent = sound.name;
+            document.getElementById('playingCategory').textContent = sound.category;
+            
+            const playPauseIcon = document.getElementById('playPauseBtn').querySelector('i');
+            playPauseIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+        }
+        
+        // Toggle favorite
+        function toggleFavorite(soundId) {
+            const index = favorites.indexOf(soundId);
+            if (index === -1) {
+                favorites.push(soundId);
+            } else {
+                favorites.splice(index, 1);
+            }
+            
+            const favBtn = document.querySelector(`.fav-btn[data-id="${soundId}"]`);
+            if (favBtn) {
+                favBtn.classList.toggle('active');
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initSoundboard();
+            
+            // Player controls
+            document.getElementById('playPauseBtn').addEventListener('click', function() {
+                if (currentPlayingId) {
+                    playSound(currentPlayingId);
+                } else {
+                    // Play first sound if none is selected
+                    playSound(1);
+                }
+            });
+            
+            document.getElementById('prevBtn').addEventListener('click', function() {
+                if (!currentPlayingId) currentPlayingId = 1;
+                let prevId = currentPlayingId - 1;
+                if (prevId < 1) prevId = sounds.length;
+                playSound(prevId);
+            });
+            
+            document.getElementById('nextBtn').addEventListener('click', function() {
+                if (!currentPlayingId) currentPlayingId = 1;
+                let nextId = currentPlayingId + 1;
+                if (nextId > sounds.length) nextId = 1;
+                playSound(nextId);
+            });
+            
+            // Volume control
+            document.getElementById('volumeSlider').addEventListener('input', function() {
+                // In a real app, this would control actual audio volume
+                console.log(`Volume set to ${this.value}%`);
+            });
+            
+            // Download buttons
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('In a real implementation, this would start the download. This is a demo.');
+                });
+            });
+            
+            // Simulate playing a sound on page load for demo purposes
+            setTimeout(() => {
+                playSound(2);
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
