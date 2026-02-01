@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSoundB | Official Download</title>
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --secondary: #3498db;
+            --bg: #0f0f0f;
+            --card: #1a1a1a;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: #eeeeee; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .container { max-width: 600px; width: 90%; background: var(--card); padding: 40px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid #333; text-align: center; }
+        h1 { font-size: 3rem; margin-bottom: 0; background: linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { color: #888; margin-top: 5px; font-style: italic; }
+        .badge-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 25px 0; }
+        .badge { background: #262626; padding: 8px 15px; border-radius: 50px; font-size: 0.85rem; border: 1px solid #444; color: var(--primary); font-weight: bold; }
+        .feature-list { text-align: left; background: #222; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
+        .feature-list li { list-style: none; margin: 10px 0; font-size: 0.95rem; }
+        .feature-list li::before { content: "✅"; margin-right: 10px; }
+        .download-box { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn { padding: 15px; border-radius: 10px; text-decoration: none; color: white; font-weight: bold; transition: 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .btn-android { background: var(--primary); }
+        .btn-pc { background: var(--secondary); }
+        .btn:hover { transform: translateY(-5px); opacity: 0.9; }
+        .btn span { font-size: 0.7rem; font-weight: normal; opacity: 0.8; }
+        footer { margin-top: 30px; font-size: 0.8rem; color: #555; }
+        .highlight { color: #f1c40f; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>HSoundB</h1>
+    <p class="tagline">The "All-Kill" Meme Soundboard</p>
+
+    <div class="badge-container">
+        <div class="badge">🛡️ GOOGLE PROTECT VERIFIED</div>
+        <div class="badge">📡 100% OFFLINE</div>
+        <div class="badge">🚀 NO LAG / INSTANT PLAY</div>
+    </div>
+
+    <div class="feature-list">
+        <li><strong>40 Legendary Sounds:</strong> Curated only the best, no trash.</li>
+        <li><strong>Ultra Optimized:</strong> Only <span class="highlight">80-92MB</span> (Not 1.7GB bloating your disk).</li>
+        <li><strong>Pitch Control:</strong> Customize the fun in real-time.</li>
+        <li><strong>Privacy First:</strong> No data collection, no permissions.</li>
+        <li><strong>Zero Malware:</strong> Clean build, dev-verified.</li>
+    </div>
+
+    <div class="download-box">
+        <a href="HSoundB_Android.apk" class="btn btn-android">
+            Download APK
+            <span>Android (80MB)</span>
+        </a>
+        <a href="HSoundB_PC.zip" class="btn btn-pc">
+            Download Win
+            <span>PC (92MB)</span>
+        </a>
+    </div>
+
+    <footer>
+        Developed with ❤️ using Godot Engine<br>
+        &copy; 2026 OmeDonation. All memes reserved.
+    </footer>
+</div>
+
+</body>
+</html>
